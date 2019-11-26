@@ -50,7 +50,8 @@ class QuantizeFunctionalTest(test.TestCase, parameterized.TestCase):
     quantized_model.compile(
         loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
     quantized_model.fit(x_train, y_train, batch_size=500)
-    _, quantized_model_accuracy = model.evaluate(x_test, y_test, verbose=0)
+    _, quantized_model_accuracy = quantized_model.evaluate(
+        x_test, y_test, verbose=0)
 
     self.assertGreater(quantized_model_accuracy, 0.6)
 
@@ -65,8 +66,6 @@ class QuantizeFunctionalTest(test.TestCase, parameterized.TestCase):
           is_quantized=True)
     quantized_model_tflite_accuracy = test_utils_mnist.eval_tflite(
         quantized_tflite_file, is_quantized=True)
-
-    # TODO(pulkitb): Check if Forward Pass of TF and TF-Lite are the same.
 
     # Ensure accuracy for quantized TF and TFLite models are similar to original
     # model. There is no clear way to measure quantization, but for MNIST

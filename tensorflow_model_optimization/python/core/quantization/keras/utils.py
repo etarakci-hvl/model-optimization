@@ -32,7 +32,7 @@ def convert_keras_to_tflite(model_path,
 
   if is_quantized:
     converter.inference_type = tf.lite.constants.INT8
-    converter.inference_input_type = tf.lite.constants.INT8
+    converter.inference_input_type = tf.lite.constants.FLOAT
 
     input_arrays = converter.get_input_arrays()
     converter.quantized_input_stats = {
